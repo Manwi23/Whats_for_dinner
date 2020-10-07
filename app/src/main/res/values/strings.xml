@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">What\'s for dinner?</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Random</string>
+    <string name="previous">Back</string>
+    <string name="button">Do stuff</string>
+    <string name="button_plus">Add one</string>
+    <string name="button_add_dish">Add dish</string>
+    <string name="hello_first_fragment">Hello world!</string>
+    <string name="random_header">Here is a random number between 0 and %d.</string>
+    <string name="hint_dish_name">Dish name</string>
+    <string name="hint_dish_type">Dish type</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Not saved</string>
+    <string name="dish_name">Dish name</string>
+    <string name="dish_type">Dish type</string>
+    <string name="rand_dish">Rand dish</string>
+    <string name="not_implemented">Not implemented</string>
+    <string name="choose_type_of_dish">Choose type of dish</string>
+    <string name="yet_to_be_determined">Press + to get random dish</string>
+    <string name="get_back">get back</string>
+</resources>
