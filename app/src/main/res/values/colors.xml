@@ -6,4 +6,5 @@
     <color name="colorBackground">#230328</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="buttonLabel">#FFFFFF</color>
+    <color name="ic_launcher_background">#DCD65F</color>
 </resources>
