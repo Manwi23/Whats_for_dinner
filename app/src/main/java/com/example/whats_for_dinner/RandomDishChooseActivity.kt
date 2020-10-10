@@ -62,12 +62,27 @@ class RandomDishChooseActivity : AppCompatActivity() {
 
         val buttonRand = findViewById<FloatingActionButton>(R.id.rand)
         buttonRand.setOnClickListener {
-            val type = "All"
+            val type = spinner.selectedItem.toString()
             if (type == "All") {
                 GlobalScope.launch {
                     val dishes = dishViewModel.getAllDishes()
                     Log.i("Tag 1", dishes.toString())
                     if (dishes != null && dishes.isNotEmpty()) {
+                        val randomDish = dishes.shuffled().take(1)[0]
+                        val builder = StringBuilder()
+                        builder.append(randomDish.name)
+                            .append(", ")
+                            .append(randomDish.type)
+                        textView.text = builder.toString()
+                    } else {
+                        textView.text = "Add some dishes first!"
+                    }
+                }
+            } else {
+                GlobalScope.launch {
+                    val dishes = dishViewModel.dishesOfAType(type)
+                    Log.i("Tag 1", dishes.toString())
+                    if (dishes.isNotEmpty()) {
                         val randomDish = dishes.shuffled().take(1)[0]
                         val builder = StringBuilder()
                         builder.append(randomDish.name)

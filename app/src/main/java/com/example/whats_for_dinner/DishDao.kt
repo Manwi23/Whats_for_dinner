@@ -18,7 +18,7 @@ interface DishDao {
     @Query("SELECT * from dish_list WHERE type = :type ORDER BY name ASC")
     fun getAlphabetizedDishesByType(type: String): List<Dish>
 
-    @Query("SELECT type from dish_list ORDER BY type ASC")
+    @Query("SELECT distinct type from dish_list ORDER BY type ASC")
     fun getAlphabetizedTypes(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
