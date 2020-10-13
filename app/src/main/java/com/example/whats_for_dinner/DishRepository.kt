@@ -26,4 +26,8 @@ class DishRepository(private val dishDao: DishDao) {
     suspend fun insert(dish: Dish) {
         dishDao.insert(dish)
     }
+
+    suspend fun delete(dish: Dish) {
+        dishDao.delete(dish)
+    }
 }

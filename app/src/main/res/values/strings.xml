@@ -22,4 +22,6 @@
     <string name="choose_type_of_dish">Choose type of dish</string>
     <string name="yet_to_be_determined">Press + to get random dish</string>
     <string name="get_back">get back</string>
+    <string name="clicked">clicked!</string>
+    <string name="delete_item">Delete item</string>
 </resources>

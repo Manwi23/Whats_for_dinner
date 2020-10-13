@@ -1,10 +1,7 @@
 package com.example.whats_for_dinner
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface DishDao {
@@ -24,6 +21,10 @@ interface DishDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(dish: Dish)
 
+    @Delete
+    suspend fun delete(dish: Dish)
+
     @Query("DELETE FROM dish_list")
     suspend fun deleteAll()
+
 }

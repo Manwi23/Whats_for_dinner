@@ -16,9 +16,6 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
     val allDishes: LiveData<List<Dish>>
-//    val allTypes: List<String>
-
-//    abstract fun dishesOfAType(type: String) : LiveData<List<Dish>>
 
     init {
         val dishDao = DishRoomDatabase.getDatabase(application, viewModelScope).dishDao()
@@ -33,6 +30,10 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
      */
     fun insert(dish: Dish) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(dish)
+    }
+
+    fun delete(dish: Dish) = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(dish)
     }
 
     fun dishesOfAType(type: String): List<Dish> {
