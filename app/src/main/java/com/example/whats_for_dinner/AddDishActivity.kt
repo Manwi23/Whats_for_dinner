@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import com.example.whats_for_dinner.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class AddDishActivity : AppCompatActivity() {
@@ -33,6 +34,13 @@ class AddDishActivity : AppCompatActivity() {
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
+            finish()
+        }
+
+        val buttonBack = findViewById<FloatingActionButton>(R.id.back_add_page)
+        buttonBack.setOnClickListener {
+            val replyIntent = Intent()
+            setResult(Activity.RESULT_CANCELED, replyIntent)
             finish()
         }
     }

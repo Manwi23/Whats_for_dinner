@@ -28,14 +28,13 @@ public abstract class DishRoomDatabase : RoomDatabase() {
                     "dish_database"
                 )
                     // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .addCallback(DishDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
                 instance
-            }//allowMainThreadQueries można dodać przed build
+            } // allowMainThreadQueries można dodać przed build
         }
 
         private class DishDatabaseCallback(
@@ -55,11 +54,10 @@ public abstract class DishRoomDatabase : RoomDatabase() {
                 // Delete all content here.
 //                dishDao.deleteAll()
 
-                // Add sample words.
-                var dish = Dish("Sample dish", "main course")
-                dishDao.insert(dish)
-                dish = Dish("Sample dish 2", "soup")
-                dishDao.insert(dish)
+//                var dish = Dish("Sample dish", "main course")
+//                dishDao.insert(dish)
+//                dish = Dish("Sample dish 2", "soup")
+//                dishDao.insert(dish)
 
             }
         }
