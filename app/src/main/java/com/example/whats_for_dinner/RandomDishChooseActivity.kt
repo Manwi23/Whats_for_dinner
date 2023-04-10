@@ -13,8 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,7 +22,13 @@ class RandomDishChooseActivity : AppCompatActivity() {
 
     private lateinit var dishViewModel: DishViewModel
     private lateinit var textView: TextView
-    private lateinit var dishDatabase: DishRoomDatabase
+    private val scope = MainScope()
+
+    private suspend fun getDishTypes() : ArrayList<String> {
+        return withContext(Dispatchers.Default) {
+            ArrayList(dishViewModel.getAllTypes())
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +47,8 @@ class RandomDishChooseActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        GlobalScope.launch{
-            val rest = ArrayList(dishViewModel.getAllTypes())
-//            types.plus(rest)
-//            val adapter2 = ArrayAdapter(this@RandomDishChooseActivity, android.R.layout.simple_spinner_item, types)
-//            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            adapter.clear()
+        scope.launch {
+            val rest = getDishTypes()
             adapter.addAll(rest)
             adapter.notifyDataSetChanged()
         }
@@ -64,7 +65,7 @@ class RandomDishChooseActivity : AppCompatActivity() {
         buttonRand.setOnClickListener {
             val type = spinner.selectedItem.toString()
             if (type == "All") {
-                GlobalScope.launch {
+                scope.launch {
                     val dishes = dishViewModel.getAllDishes()
                     Log.i("Tag 1", dishes.toString())
                     if (dishes != null && dishes.isNotEmpty()) {
@@ -79,7 +80,7 @@ class RandomDishChooseActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                GlobalScope.launch {
+                scope.launch {
                     val dishes = dishViewModel.dishesOfAType(type)
                     Log.i("Tag 1", dishes.toString())
                     if (dishes.isNotEmpty()) {

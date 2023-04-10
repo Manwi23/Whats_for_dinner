@@ -5,36 +5,67 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
+import androidx.lifecycle.ViewModelProvider
 import com.example.whats_for_dinner.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AddDishActivity : AppCompatActivity() {
 
     private lateinit var editDishNameView: EditText
-    private lateinit var editDishTypeView: EditText
+    private val scope = MainScope()
+    private lateinit var dishViewModel: DishViewModel
+
+    private suspend fun getDishTypes() : ArrayList<String> {
+        return withContext(Dispatchers.Default) {
+            ArrayList(dishViewModel.getAllTypes())
+        }
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_dish)
         editDishNameView = findViewById(R.id.edit_dish_name)
-        editDishTypeView = findViewById(R.id.edit_dish_type)
+        dishViewModel = ViewModelProvider(this).get(DishViewModel::class.java)
+        val spinner: Spinner = findViewById(R.id.spinner_add_type)
+
+        val arrayList = ArrayList<String>()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        scope.launch {
+            val types = getDishTypes()
+            if (types.isEmpty()) {
+                types.add("(none)")
+            }
+            adapter.addAll(types)
+            adapter.notifyDataSetChanged()
+        }
 
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editDishNameView.text) || TextUtils.isEmpty(editDishTypeView.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
+            if (TextUtils.isEmpty(editDishNameView.text)) {
+                Toast.makeText(
+                    applicationContext,
+                    R.string.provide_a_name_toast,
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
                 val dishName = editDishNameView.text.toString()
-                val dishType = editDishTypeView.text.toString()
+                val dishType = spinner.selectedItem.toString()
                 val dishDataArray = arrayOf(dishName, dishType)
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
+                finish()
             }
-            finish()
         }
 
         val buttonBack = findViewById<FloatingActionButton>(R.id.back_add_page)

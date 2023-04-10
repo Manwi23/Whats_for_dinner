@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">What\'s for dinner?</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Random</string>
@@ -20,8 +19,10 @@
     <string name="rand_dish">Rand dish</string>
     <string name="not_implemented">Not implemented</string>
     <string name="choose_type_of_dish">Choose type of dish</string>
-    <string name="yet_to_be_determined">Press dice symbol to get random dish</string>
+    <string name="yet_to_be_determined">Press dice symbol for a random dish</string>
     <string name="get_back">get back</string>
     <string name="clicked">clicked!</string>
     <string name="delete_item">Delete item</string>
+    <string name="add_type">Add new type</string>
+    <string name="provide_a_name_toast">Please provide a name</string>
 </resources>
