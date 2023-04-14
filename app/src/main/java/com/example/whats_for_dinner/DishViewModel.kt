@@ -36,7 +36,7 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         repository.delete(dish)
     }
 
-    fun dishesOfAType(type: String): List<Dish> {
+    suspend fun dishesOfAType(type: String): List<Dish> {
         return repository.getDishesByType(type)
     }
 
@@ -44,7 +44,7 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllTypes()
     }
 
-    fun getAllDishes(): List<Dish>? {
+    suspend fun getAllDishes(): List<Dish>? {
         return repository.getAllDishes()
     }
 

@@ -11,7 +11,7 @@ class DishRepository(private val dishDao: DishDao) {
     val allDishes: LiveData<List<Dish>> = dishDao.getAlphabetizedDishes()
 //    val allTypes: List<String> = dishDao.getAlphabetizedTypes()
 
-    fun getDishesByType(type: String): List<Dish> {
+    suspend fun getDishesByType(type: String): List<Dish> {
         return dishDao.getAlphabetizedDishesByType(type)
     }
 
@@ -19,7 +19,7 @@ class DishRepository(private val dishDao: DishDao) {
         return dishDao.getAlphabetizedTypes()
     }
 
-    fun getAllDishes(): List<Dish> {
+    suspend fun getAllDishes(): List<Dish> {
         return dishDao.getAlphabetizedDishesDead()
     }
 

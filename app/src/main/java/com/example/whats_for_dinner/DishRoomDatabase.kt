@@ -2,6 +2,7 @@ package com.example.whats_for_dinner
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Ignore
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -50,6 +51,7 @@ public abstract class DishRoomDatabase : RoomDatabase() {
                 }
             }
 
+            @Suppress("UNUSED_PARAMETER")
             suspend fun populateDatabase(dishDao: DishDao) {
                 // Delete all content here.
 //                dishDao.deleteAll()

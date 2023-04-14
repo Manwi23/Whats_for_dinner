@@ -10,10 +10,10 @@ interface DishDao {
     fun getAlphabetizedDishes(): LiveData<List<Dish>>
 
     @Query("SELECT * from dish_list ORDER BY name ASC")
-    fun getAlphabetizedDishesDead(): List<Dish>
+    suspend fun getAlphabetizedDishesDead(): List<Dish>
 
     @Query("SELECT * from dish_list WHERE type = :type ORDER BY name ASC")
-    fun getAlphabetizedDishesByType(type: String): List<Dish>
+    suspend fun getAlphabetizedDishesByType(type: String): List<Dish>
 
     @Query("SELECT distinct type from dish_list ORDER BY type ASC")
     suspend fun getAlphabetizedTypes(): List<String>
