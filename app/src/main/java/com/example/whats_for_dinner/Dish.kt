@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// TODO: consider adding a sepaarte type table
+
 @Entity(tableName = "dish_list")
 class Dish (name : String, type : String){
     @PrimaryKey(autoGenerate = true)

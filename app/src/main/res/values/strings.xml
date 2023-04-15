@@ -8,7 +8,6 @@
     <string name="button">Do stuff</string>
     <string name="button_plus">Add one</string>
     <string name="button_add_dish">Add dish</string>
-    <string name="hello_first_fragment">Hello world!</string>
     <string name="random_header">Here is a random number between 0 and %d.</string>
     <string name="hint_dish_name">Dish name</string>
     <string name="hint_dish_type">Dish type</string>
@@ -18,11 +17,15 @@
     <string name="dish_type">Dish type</string>
     <string name="rand_dish">Rand dish</string>
     <string name="not_implemented">Not implemented</string>
-    <string name="choose_type_of_dish">Choose type of dish</string>
+    <string name="choose_type_of_dish">Type</string>
     <string name="yet_to_be_determined">Press dice symbol for a random dish</string>
     <string name="get_back">get back</string>
     <string name="clicked">clicked!</string>
     <string name="delete_item">Delete item</string>
     <string name="add_type">Add new type</string>
     <string name="provide_a_name_toast">Please provide a name</string>
+    <string name="new_type_name">New type</string>
+    <string name="type_added">New type added</string>
+    <string name="type_present">Type already present</string>
+    <string name="select_type_first">Please select a type</string>
 </resources>

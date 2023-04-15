@@ -15,6 +15,7 @@ class DishRepository(private val dishDao: DishDao) {
         return dishDao.getAlphabetizedDishesByType(type)
     }
 
+    // TODO: order types based on usage
     suspend fun getAllTypes(): List<String> {
         return dishDao.getAlphabetizedTypes()
     }

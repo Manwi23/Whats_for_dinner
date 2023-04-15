@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/add_dish_main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,24 +21,16 @@
         android:autofillHints="" />
 
     <LinearLayout
+        android:id="@+id/choose_type_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="end">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <!--        <EditText-->
-            <!--            android:id="@+id/edit_dish_type"-->
-            <!--            android:layout_width="283dp"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_margin="@dimen/big_padding"-->
-            <!--            android:fontFamily="sans-serif-light"-->
-            <!--            android:hint="@string/dish_type"-->
-            <!--            android:inputType="textAutoComplete"-->
-            <!--            android:minHeight="@dimen/min_height"-->
-            <!--            android:textSize="18sp" />-->
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/choose_type_add"
@@ -51,19 +46,23 @@
 
             <Spinner
                 android:id="@+id/spinner_add_type"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:minHeight="@dimen/min_height"
-                android:textSize="18sp" />
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                tools:ignore="NestedWeights" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center|end">
+            android:gravity="end">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/add_type"
@@ -77,6 +76,65 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/add_new_type_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/new_type_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:autofillHints=""
+                    android:fontFamily="sans-serif-light"
+                    android:hint="@string/new_type_name"
+                    android:inputType="textAutoComplete"
+                    android:minHeight="@dimen/min_height"
+                    android:textSize="18sp"
+                    android:layout_weight="1"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_type_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/add_type"
+                    android:src="@drawable/baseline_save_24"
+                    app:fabSize="mini" />
+
+<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                    android:id="@+id/add_type_hide"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:contentDescription="@string/add_type"-->
+<!--                    android:src="@drawable/baseline_horizontal_rule_24"-->
+<!--                    app:fabSize="mini" />-->
+
+            </LinearLayout>
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/button_save"
@@ -101,5 +159,4 @@
         android:src="@drawable/ic_baseline_arrow_back_24" />
 
     </LinearLayout>
-
 </LinearLayout>
