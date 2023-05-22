@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// TODO: consider adding a sepaarte type table
+// TODO: consider adding a separate type table
 
 @Entity(tableName = "dish_list")
 class Dish (name : String, type : String){

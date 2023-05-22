@@ -28,4 +28,5 @@
     <string name="type_added">New type added</string>
     <string name="type_present">Type already present</string>
     <string name="select_type_first">Please select a type</string>
+    <string name="action_sync">Sync data</string>
 </resources>
