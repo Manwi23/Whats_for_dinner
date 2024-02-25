@@ -20,13 +20,14 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.net.InetSocketAddress
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
-import io.ktor.client.features.get
+//import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
+//import org.json.JSONArray
+import com.google.gson.*
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
@@ -107,9 +108,34 @@ class MainActivity : AppCompatActivity() {
     private suspend fun syncToServer() {
         var text = "placeholder"
         try {
+            val dishesList = dishViewModel.getAllDishes() ?: listOf()
+            println(dishesList)
+//            val dishes = JSONArray(dishesList)
+            val gson = Gson()
+            val dishes = gson.toJson(dishesList)
+            println(dishes)
 //            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator
-            val response: HttpResponse = client.get("http://192.168.1.23:5000") // real device
-            text = response.content.readUTF8Line().toString()
+//            val response: HttpResponse = client.get("http://192.168.1.23:5000") // real device
+//            text = response.content.readUTF8Line().toString()
+//            val response: HttpResponse = client.post("http://192.168.1.23:5000/") {
+////                url {
+////                    it.path("post", dishes.toString())
+//                    contentType(ContentType.Application.Json)
+//                    setBody(dishesList)
+////                }
+//
+//            }
+            val response: HttpResponse = client.post("http://192.168.1.23:5000/") {
+                contentType(ContentType.Application.Json)
+//                setBody(Dish("name", "type"))
+                setBody(dishes)
+                url {
+                    path("post", "dishname")
+                }
+            }
+
+            text = response.toString()
+//            content.readUTF8Line().toString()
         } catch (e: java.lang.Exception) {
             println(e.message)
             text = "ah nope"
