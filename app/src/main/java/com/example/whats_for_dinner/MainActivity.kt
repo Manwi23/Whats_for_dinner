@@ -14,7 +14,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
+import io.ktor.network.selector.*
+import io.ktor.network.sockets.*
+import io.ktor.utils.io.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.net.InetSocketAddress
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
+import io.ktor.client.features.get
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
@@ -23,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val newDishActivityRequestCode = 1
     private val randomDishActivityRequestCode = 2
     private lateinit var dishViewModel: DishViewModel
+    private val client = HttpClient(CIO)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +104,25 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    private suspend fun syncToServer() {
+        var text = "placeholder"
+        try {
+//            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator
+            val response: HttpResponse = client.get("http://192.168.1.23:5000") // real device
+            text = response.content.readUTF8Line().toString()
+        } catch (e: java.lang.Exception) {
+            println(e.message)
+            text = "ah nope"
+        }
+        this.runOnUiThread {
+            Toast.makeText(
+                applicationContext,
+                text,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -102,6 +134,12 @@ class MainActivity : AppCompatActivity() {
                     R.string.not_implemented,
                     Toast.LENGTH_LONG
                 ).show()
+                true
+            }
+            R.id.action_sync -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    syncToServer()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
