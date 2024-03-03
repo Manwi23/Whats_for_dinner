@@ -1,5 +1,6 @@
 package com.example.whats_for_dinner
 
+//import io.ktor.client.features.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -14,22 +15,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.*
+import com.google.gson.reflect.TypeToken
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-//import io.ktor.client.features.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-//import org.json.JSONArray
-import com.google.gson.*
+import java.lang.reflect.Type
+
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
+
+inline fun <reified T> parseArray(json: String, typeToken: Type): T {
+    val gson = GsonBuilder().create()
+    return gson.fromJson<T>(json, typeToken)
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -116,26 +124,23 @@ class MainActivity : AppCompatActivity() {
             println(dishes)
 //            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator
 //            val response: HttpResponse = client.get("http://192.168.1.23:5000") // real device
-//            text = response.content.readUTF8Line().toString()
-//            val response: HttpResponse = client.post("http://192.168.1.23:5000/") {
-////                url {
-////                    it.path("post", dishes.toString())
-//                    contentType(ContentType.Application.Json)
-//                    setBody(dishesList)
-////                }
-//
-//            }
             val response: HttpResponse = client.post("http://192.168.1.23:5000/") {
                 contentType(ContentType.Application.Json)
-//                setBody(Dish("name", "type"))
                 setBody(dishes)
                 url {
-                    path("post", "dishname")
+                    path("sync")
                 }
             }
 
-            text = response.toString()
-//            content.readUTF8Line().toString()
+            text = response.body()
+            println(text)
+            println("here")
+            val type = object : TypeToken<List<TempDish>>() {}.type
+            val dishList = parseArray<List<TempDish>>(text, type)
+            for (dish in dishList) {
+                dishViewModel.updateServerId(dish.id, Dish(dish.name, dish.type, dish.server_id))
+//                dishViewModel.updateDish(dish.id, Dish(dish.name, dish.type, dish.server_id))
+            }
         } catch (e: java.lang.Exception) {
             println(e.message)
             text = "ah nope"

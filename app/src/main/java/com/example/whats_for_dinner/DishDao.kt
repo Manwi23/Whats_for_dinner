@@ -27,4 +27,9 @@ interface DishDao {
     @Query("DELETE FROM dish_list")
     suspend fun deleteAll()
 
+    @Query("UPDATE dish_list SET server_id = :serverId WHERE id = :id")
+    suspend fun updateServerId(serverId: Int, id: Int)
+
+    @Query("UPDATE dish_list SET name = :name, type = :type WHERE id = :id")
+    suspend fun updateDish(name: String, type: String, id: Int)
 }
