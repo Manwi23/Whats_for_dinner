@@ -7,7 +7,7 @@ data class TempDish (
     var id: Int,
     var name: String,
     var type: String,
-    var server_id: Int,
+    var serverId: Int,
     var timestamp: Long,
 )
 

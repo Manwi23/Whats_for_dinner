@@ -117,8 +117,7 @@ class MainActivity : AppCompatActivity() {
             val gson = Gson()
             val dishes = gson.toJson(dishesList)
             println(dishes)
-//            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator
-//            val response: HttpResponse = client.get("http://192.168.1.23:5000") // real device
+//            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator if server on localhost
             val response: HttpResponse = client.post("http://192.168.1.23:5000/") {
                 contentType(ContentType.Application.Json)
                 setBody(dishes)
@@ -133,8 +132,15 @@ class MainActivity : AppCompatActivity() {
             val type = object : TypeToken<List<TempDish>>() {}.type
             val dishList = parseArray<List<TempDish>>(text, type)
             for (dish in dishList) {
-                dishViewModel.updateServerId(dish.id, Dish(dish.name, dish.type, dish.server_id, dish.timestamp))
+                if (dish.timestamp == (-1).toLong()) {
+                    dishViewModel.deleteById(dish.id)
+                } else {
+                    dishViewModel.updateServerId(
+                        dish.id,
+                        Dish(dish.name, dish.type, dish.serverId, dish.timestamp)
+                    )
 //                dishViewModel.updateDish(dish.id, Dish(dish.name, dish.type, dish.server_id))
+                }
             }
         } catch (e: java.lang.Exception) {
             println(e.message)

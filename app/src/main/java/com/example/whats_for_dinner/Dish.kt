@@ -13,7 +13,7 @@ class Dish(
     @ColumnInfo(name = "type")
     val type: String,
     @ColumnInfo(name = "server_id")
-    val server_id: Int = -1,
+    val serverId: Int = -1,
     @ColumnInfo(name = "timestamp")
     val timestamp: Long = -1,
 ) {

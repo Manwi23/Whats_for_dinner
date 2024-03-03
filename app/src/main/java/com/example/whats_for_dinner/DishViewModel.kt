@@ -36,6 +36,10 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         repository.delete(dish)
     }
 
+    fun deleteById(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteById(id)
+    }
+
     suspend fun dishesOfAType(type: String): List<Dish> {
         return repository.getDishesByType(type)
     }

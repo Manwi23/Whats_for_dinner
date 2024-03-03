@@ -24,6 +24,9 @@ interface DishDao {
     @Delete
     suspend fun delete(dish: Dish)
 
+    @Query("DELETE FROM dish_list WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("DELETE FROM dish_list")
     suspend fun deleteAll()
 

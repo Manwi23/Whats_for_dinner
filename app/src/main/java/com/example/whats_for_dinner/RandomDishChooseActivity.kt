@@ -68,7 +68,7 @@ class RandomDishChooseActivity : AppCompatActivity() {
                 scope.launch {
                     val dishes = dishViewModel.getAllDishes()
                     Log.i("Tag 1", dishes.toString())
-                    if (dishes != null && dishes.isNotEmpty()) {
+                    if (!dishes.isNullOrEmpty()) {
                         val randomDish = dishes.shuffled().take(1)[0]
                         val builder = StringBuilder()
                         builder.append(randomDish.name)
