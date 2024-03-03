@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Dish class
-@Database(entities = arrayOf(Dish::class), version = 4, exportSchema = false)
+@Database(entities = [Dish::class], version = 6, exportSchema = false)
 public abstract class DishRoomDatabase : RoomDatabase() {
 
     abstract fun dishDao(): DishDao

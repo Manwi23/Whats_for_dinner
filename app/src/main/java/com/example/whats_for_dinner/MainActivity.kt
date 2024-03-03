@@ -29,15 +29,9 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
-
-inline fun <reified T> parseArray(json: String, typeToken: Type): T {
-    val gson = GsonBuilder().create()
-    return gson.fromJson<T>(json, typeToken)
-}
 
 class MainActivity : AppCompatActivity() {
 
@@ -82,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
@@ -89,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             intentData?.let { data ->
 //                val dish_data_list = data.getStringArrayListExtra(AddDishActivity.EXTRA_REPLY)
                 val dishDataArray = data.getStringArrayExtra(AddDishActivity.EXTRA_REPLY)
-                val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1]) }
+                val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1], -1, java.time.Instant.now().toEpochMilli()) }
                 if (dish != null) {
                     dishViewModel.insert(dish)
                 }
@@ -138,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             val type = object : TypeToken<List<TempDish>>() {}.type
             val dishList = parseArray<List<TempDish>>(text, type)
             for (dish in dishList) {
-                dishViewModel.updateServerId(dish.id, Dish(dish.name, dish.type, dish.server_id))
+                dishViewModel.updateServerId(dish.id, Dish(dish.name, dish.type, dish.server_id, dish.timestamp))
 //                dishViewModel.updateDish(dish.id, Dish(dish.name, dish.type, dish.server_id))
             }
         } catch (e: java.lang.Exception) {
