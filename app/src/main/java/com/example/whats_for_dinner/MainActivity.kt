@@ -135,11 +135,7 @@ class MainActivity : AppCompatActivity() {
                 if (dish.timestamp == (-1).toLong()) {
                     dishViewModel.deleteById(dish.id)
                 } else {
-                    dishViewModel.updateServerId(
-                        dish.id,
-                        Dish(dish.name, dish.type, dish.serverId, dish.timestamp)
-                    )
-//                dishViewModel.updateDish(dish.id, Dish(dish.name, dish.type, dish.server_id))
+                    dishViewModel.insertOrUpdate(dish.id, Dish(dish.name, dish.type, dish.serverId, dish.timestamp))
                 }
             }
         } catch (e: java.lang.Exception) {

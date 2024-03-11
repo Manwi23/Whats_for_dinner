@@ -36,11 +36,15 @@ class DishRepository(private val dishDao: DishDao) {
         dishDao.deleteById(id)
     }
 
-    suspend fun updateServerId(id: Int, dish: Dish) {
-        dishDao.updateServerId(dish.serverId, id)
+    suspend fun markToDelete(id: Int) {
+        dishDao.markToDelete(id)
     }
 
-    suspend fun updateDish(id: Int, dish: Dish) {
-        dishDao.updateDish(dish.name, dish.type, id)
+    suspend fun insertOrUpdate(id: Int, dish: Dish) {
+        if (id == -1) {
+            dishDao.insert(dish)
+            return
+        }
+        dishDao.updateDish(id, dish.name, dish.type, dish.serverId, dish.timestamp)
     }
 }

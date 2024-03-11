@@ -1,15 +1,16 @@
 package com.example.whats_for_dinner
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.reflect.jvm.internal.impl.metadata.jvm.JvmProtoBuf.flags
+
 
 class DishListAdapter (private var context: Context, private var dishViewModel: DishViewModel) : RecyclerView.Adapter<DishListAdapter.DishViewHolder>() {
 
@@ -37,13 +38,19 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
             .append(", ")
             .append(dish.type)
         holder.dishItemView.text = builder.toString()
+        if (dish.timestamp == (-1).toLong()) {
+            holder.dishItemView.paintFlags =
+                holder.dishItemView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            holder.dishItemView.paintFlags = holder.dishItemView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
 
         holder.storedView.setOnLongClickListener {
             val popupMenu = PopupMenu(context, holder.storedView)
             popupMenu.setOnMenuItemClickListener{
                 if (it.itemId == R.id.action_delete) {
                     GlobalScope.launch{
-                        deleteDish(dish)
+                        dishViewModel.markToDelete(dish.id)
                     }
                 }
                 true
@@ -53,11 +60,6 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
 
             true
         }
-    }
-
-
-    private fun deleteDish(dish: Dish) {
-        dishViewModel.delete(dish)
     }
 
 
