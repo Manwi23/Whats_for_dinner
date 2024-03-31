@@ -47,4 +47,8 @@ class DishRepository(private val dishDao: DishDao) {
         }
         dishDao.updateDish(id, dish.name, dish.type, dish.serverId, dish.timestamp)
     }
+
+    suspend fun deleteAll() {
+        dishDao.deleteAll()
+    }
 }

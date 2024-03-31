@@ -37,7 +37,7 @@ class AddDishActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_dish)
         setupUI(findViewById(R.id.add_dish_main_layout))
         editDishNameView = findViewById(R.id.edit_dish_name)
-        dishViewModel = ViewModelProvider(this).get(DishViewModel::class.java)
+        dishViewModel = ViewModelProvider(this)[DishViewModel::class.java]
         plusClicked = false
         addNewTypeView = findViewById(R.id.new_type_name)
         val spinner: Spinner = findViewById(R.id.spinner_add_type)
@@ -52,9 +52,6 @@ class AddDishActivity : AppCompatActivity() {
 
         scope.launch {
             val types = getDishTypes()
-//            if (types.isEmpty()) {
-//                types.add("(none)")
-//            }
             adapter.addAll(types)
             currentTypes = types
             adapter.notifyDataSetChanged()

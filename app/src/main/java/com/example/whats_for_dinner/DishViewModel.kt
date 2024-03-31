@@ -40,6 +40,10 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         repository.deleteById(id)
     }
 
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAll()
+    }
+
     fun markToDelete(id: Int) = viewModelScope.launch(Dispatchers.IO) {
         repository.markToDelete(id)
     }
@@ -52,7 +56,7 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllTypes()
     }
 
-    suspend fun getAllDishes(): List<Dish>? {
+    suspend fun getAllDishes(): List<Dish> {
         return repository.getAllDishes()
     }
 

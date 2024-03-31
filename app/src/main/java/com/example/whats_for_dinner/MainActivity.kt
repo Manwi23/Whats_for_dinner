@@ -3,8 +3,10 @@ package com.example.whats_for_dinner
 //import io.ktor.client.features.*
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (menu is MenuBuilder) {
-            (menu as MenuBuilder).setOptionalIconsVisible(true)
+            menu.setOptionalIconsVisible(true)
         }
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -113,7 +115,6 @@ class MainActivity : AppCompatActivity() {
         try {
             val dishesList = dishViewModel.getAllDishes() ?: listOf()
             println(dishesList)
-//            val dishes = JSONArray(dishesList)
             val gson = Gson()
             val dishes = gson.toJson(dishesList)
             println(dishes)
@@ -122,13 +123,12 @@ class MainActivity : AppCompatActivity() {
                 contentType(ContentType.Application.Json)
                 setBody(dishes)
                 url {
-                    path("sync")
+                    path("sync/dish")
                 }
             }
 
             text = response.body()
             println(text)
-            println("here")
             val type = object : TypeToken<List<TempDish>>() {}.type
             val dishList = parseArray<List<TempDish>>(text, type)
             for (dish in dishList) {
@@ -140,6 +140,39 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: java.lang.Exception) {
             println(e.message)
+            text = "ah nope"
+        }
+        this.runOnUiThread {
+            Toast.makeText(
+                applicationContext,
+                text,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private suspend fun overrideWithServerStateAction() {
+        var text = "placeholder"
+        try {
+            dishViewModel.deleteAll()
+
+//            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator if server on localhost
+            val response: HttpResponse = client.get("http://192.168.1.23:5000/") {
+                contentType(ContentType.Application.Json)
+                url {
+                    path("getServerState/dish")
+                }
+            }
+
+            text = response.body()
+            Log.e("SERVER", text)
+            val type = object : TypeToken<List<TempDish>>() {}.type
+            val dishList = parseArray<List<TempDish>>(text, type)
+            for (dish in dishList) {
+                dishViewModel.insert(Dish(dish.name, dish.type, dish.serverId, dish.timestamp))
+            }
+        } catch (e: java.lang.Exception) {
+            e.message?.let { Log.e("SERVER", it) }
             text = "ah nope"
         }
         this.runOnUiThread {
@@ -168,6 +201,22 @@ class MainActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     syncToServer()
                 }
+                true
+            }
+            R.id.action_override -> {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                builder
+                    .setTitle("Override with server state?")
+                    .setMessage("Any local changes not synced with server will be lost.")
+                    .setPositiveButton("Yes, continue") { _, _ ->
+                        CoroutineScope(Dispatchers.IO).launch {
+                            overrideWithServerStateAction()
+                        }
+                    }
+                    .setNegativeButton("Cancel") { _, _ -> }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
