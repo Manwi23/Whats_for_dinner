@@ -16,6 +16,8 @@ class Dish(
     val serverId: Int = -1,
     @ColumnInfo(name = "timestamp")
     val timestamp: Long = -1,
+    @ColumnInfo(name = "note")
+    val note: String = "",
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0;

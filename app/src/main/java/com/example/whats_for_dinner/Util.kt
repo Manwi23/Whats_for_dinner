@@ -9,6 +9,7 @@ data class TempDish (
     var type: String,
     var serverId: Int,
     var timestamp: Long,
+    var note: String,
 )
 
 inline fun <reified T> parseArray(json: String, typeToken: Type): T {
