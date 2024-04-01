@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun syncToServer() {
-        var text = "placeholder"
+        var text = "got server response"
         try {
             val dishesList = dishViewModel.getAllDishes() ?: listOf()
             println(dishesList)
@@ -127,8 +127,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            text = response.body()
-            println(text)
+            Log.e("SERVER", response.body())
             val type = object : TypeToken<List<TempDish>>() {}.type
             val dishList = parseArray<List<TempDish>>(text, type)
             for (dish in dishList) {
@@ -152,9 +151,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun overrideWithServerStateAction() {
-        var text = "placeholder"
+        var text = "got server response"
         try {
-            dishViewModel.deleteAll()
 
 //            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator if server on localhost
             val response: HttpResponse = client.get("http://192.168.1.23:5000/") {
@@ -164,8 +162,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            text = response.body()
-            Log.e("SERVER", text)
+            dishViewModel.deleteAll()
+
+            Log.e("SERVER", response.body())
             val type = object : TypeToken<List<TempDish>>() {}.type
             val dishList = parseArray<List<TempDish>>(text, type)
             for (dish in dishList) {
