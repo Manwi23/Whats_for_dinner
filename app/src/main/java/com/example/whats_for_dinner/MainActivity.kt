@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun syncToServer() {
-        var text = "got server response"
+        var text = "Got server response"
         try {
             val dishesList = dishViewModel.getAllDishes() ?: listOf()
             println(dishesList)
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 
             Log.e("SERVER", response.body())
             val type = object : TypeToken<List<TempDish>>() {}.type
-            val dishList = parseArray<List<TempDish>>(text, type)
+            val dishList = parseArray<List<TempDish>>(response.body(), type)
             for (dish in dishList) {
                 if (dish.timestamp == (-1).toLong()) {
                     dishViewModel.deleteById(dish.id)
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: java.lang.Exception) {
             println(e.message)
-            text = "ah nope"
+            text = "Ah nope"
         }
         this.runOnUiThread {
             Toast.makeText(
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun overrideWithServerStateAction() {
-        var text = "got server response"
+        var text = "Got server response"
         try {
 
 //            val response: HttpResponse = client.get("http://10.0.2.2:5000") // emulator if server on localhost
@@ -166,13 +166,13 @@ class MainActivity : AppCompatActivity() {
 
             Log.e("SERVER", response.body())
             val type = object : TypeToken<List<TempDish>>() {}.type
-            val dishList = parseArray<List<TempDish>>(text, type)
+            val dishList = parseArray<List<TempDish>>(response.body(), type)
             for (dish in dishList) {
                 dishViewModel.insert(Dish(dish.name, dish.type, dish.serverId, dish.timestamp))
             }
         } catch (e: java.lang.Exception) {
             e.message?.let { Log.e("SERVER", it) }
-            text = "ah nope"
+            text = "Ah nope"
         }
         this.runOnUiThread {
             Toast.makeText(
