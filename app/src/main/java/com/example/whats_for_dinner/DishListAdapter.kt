@@ -2,6 +2,7 @@ package com.example.whats_for_dinner
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.reflect.jvm.internal.impl.metadata.jvm.JvmProtoBuf.flags
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
 
 
 class DishListAdapter (private var context: Context, private var dishViewModel: DishViewModel) : RecyclerView.Adapter<DishListAdapter.DishViewHolder>() {
@@ -17,7 +18,11 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var dishes = emptyList<Dish>() // Cached copy of dishes
     private var types = emptyList<String>() // Cached copy of types
+    private lateinit var onClickEditDish: (id: Int) -> Unit
 
+    constructor(context: Context, dishViewModel: DishViewModel, onClickEditDishFun: (id: Int) -> Unit) : this(context, dishViewModel) {
+        onClickEditDish = onClickEditDishFun
+    }
 
     inner class DishViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dishItemView: TextView = itemView.findViewById(R.id.textView)
@@ -51,6 +56,11 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
                 if (it.itemId == R.id.action_delete) {
                     GlobalScope.launch{
                         dishViewModel.markToDelete(dish.id)
+                    }
+                }
+                if (it.itemId == R.id.action_edit) {
+                    GlobalScope.launch {
+                        onClickEditDish(dish.id)
                     }
                 }
                 true

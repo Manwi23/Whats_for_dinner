@@ -48,6 +48,10 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         repository.markToDelete(id)
     }
 
+    suspend fun getById(id: Int): Dish? {
+        return repository.getById(id)
+    }
+
     suspend fun dishesOfAType(type: String): List<Dish> {
         return repository.getDishesByType(type)
     }

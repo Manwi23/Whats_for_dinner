@@ -24,6 +24,12 @@ class DishRepository(private val dishDao: DishDao) {
         return dishDao.getAlphabetizedDishesDead()
     }
 
+    suspend fun getById(id: Int): Dish? {
+        val list = dishDao.getDishByLocalId(id)
+        if (list.isEmpty()) return null
+        return list[0]
+    }
+
     suspend fun insert(dish: Dish) {
         dishDao.insert(dish)
     }

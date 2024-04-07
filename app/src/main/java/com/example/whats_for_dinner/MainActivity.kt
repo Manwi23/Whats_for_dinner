@@ -25,9 +25,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.network.selector.*
-import io.ktor.network.sockets.*
-import io.ktor.utils.io.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,10 +32,11 @@ import kotlinx.coroutines.launch
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity()  {
 
     private val newDishActivityRequestCode = 1
     private val randomDishActivityRequestCode = 2
+    private val editDishActivityRequestCode = 3
     private lateinit var dishViewModel: DishViewModel
     private val client = HttpClient(CIO)
 
@@ -49,10 +47,10 @@ class MainActivity : AppCompatActivity() {
 //        setSupportActionBar(findViewById(R.id.toolbar))
 
         // Get a new or existing ViewModel from the ViewModelProvider.
-        dishViewModel = ViewModelProvider(this).get(DishViewModel::class.java)
+        dishViewModel = ViewModelProvider(this)[DishViewModel::class.java]
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = DishListAdapter(this, dishViewModel)
+        val adapter = DishListAdapter(this, dishViewModel, onItemClicked)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -64,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             dishes?.let { adapter.setDishes(it) }
         })
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
+        val addButton = findViewById<FloatingActionButton>(R.id.add_button)
+        addButton.setOnClickListener {
             val intent = Intent(this@MainActivity, AddDishActivity::class.java)
             startActivityForResult(intent, newDishActivityRequestCode)
         }
@@ -78,13 +76,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    val onItemClicked: (Int) -> Unit = {id ->
+        Log.d("EDIT", "here")
+
+        val intent = Intent(this, EditDishActivity::class.java)
+        intent.putExtra(Intent.EXTRA_INDEX, id)
+        startActivityForResult(intent, editDishActivityRequestCode)
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
         if (requestCode == newDishActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
-//                val dish_data_list = data.getStringArrayListExtra(AddDishActivity.EXTRA_REPLY)
                 val dishDataArray = data.getStringArrayExtra(AddDishActivity.EXTRA_REPLY)
                 val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1], -1, java.time.Instant.now().toEpochMilli()) }
                 if (dish != null) {
@@ -96,6 +101,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 R.string.empty_not_saved,
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Toast.makeText(
+                applicationContext,
+                "Something",
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -222,7 +233,4 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-
 }

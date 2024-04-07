@@ -22,6 +22,7 @@
     <string name="get_back">get back</string>
     <string name="clicked">clicked!</string>
     <string name="delete_item">Delete item</string>
+    <string name="edit_item">Edit item</string>
     <string name="add_type">Add new type</string>
     <string name="provide_a_name_toast">Please provide a name</string>
     <string name="new_type_name">New type</string>

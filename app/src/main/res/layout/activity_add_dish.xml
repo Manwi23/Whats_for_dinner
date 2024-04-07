@@ -24,10 +24,11 @@
         android:id="@+id/choose_type_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="end"
+        android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="1">
@@ -82,17 +83,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:baselineAligned="false">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="1">
 
                 <EditText
                     android:id="@+id/new_type_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:autofillHints=""
@@ -101,7 +103,8 @@
                     android:inputType="textAutoComplete"
                     android:minHeight="@dimen/min_height"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights" />
 
 
             </LinearLayout>
@@ -121,15 +124,6 @@
                     android:contentDescription="@string/add_type"
                     android:src="@drawable/baseline_save_24"
                     app:fabSize="mini" />
-
-<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                    android:id="@+id/add_type_hide"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="16dp"-->
-<!--                    android:contentDescription="@string/add_type"-->
-<!--                    android:src="@drawable/baseline_horizontal_rule_24"-->
-<!--                    app:fabSize="mini" />-->
 
             </LinearLayout>
 
