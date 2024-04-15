@@ -28,6 +28,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Integer.parseInt
 
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
@@ -76,8 +77,8 @@ class MainActivity : AppCompatActivity()  {
 
     }
 
-    val onItemClicked: (Int) -> Unit = {id ->
-        Log.d("EDIT", "here")
+    private val onItemClicked: (Int) -> Unit = { id ->
+        Log.d("EDIT", "start edit")
 
         val intent = Intent(this, EditDishActivity::class.java)
         intent.putExtra(Intent.EXTRA_INDEX, id)
@@ -94,21 +95,46 @@ class MainActivity : AppCompatActivity()  {
                 val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1], -1, java.time.Instant.now().toEpochMilli()) }
                 if (dish != null) {
                     dishViewModel.insert(dish)
+
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.changes_saved,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-                Unit
             }
-        } else if (requestCode == newDishActivityRequestCode && resultCode == Activity.RESULT_CANCELED) {
+        } else if (requestCode == editDishActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.let { data ->
+                val dishDataArray = data.getStringArrayExtra(EditDishActivity.EXTRA_REPLY)
+                if (dishDataArray != null) {
+                    val mask = Dish.fieldDict()
+                    mask["name"] = true
+                    mask["type"] = true
+                    mask["timestamp"] = true
+
+                    val dish = Dish(dishDataArray[1], dishDataArray[2], -1, java.time.Instant.now().toEpochMilli())
+                    Log.d("EDIT", dish.toString())
+                    dishViewModel.updateWithMask(parseInt(dishDataArray[0]), dish, mask)
+
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.changes_saved,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(
                 applicationContext,
                 R.string.empty_not_saved,
                 Toast.LENGTH_LONG
             ).show()
         } else {
-            Toast.makeText(
-                applicationContext,
-                "Something",
-                Toast.LENGTH_LONG
-            ).show()
+//            Toast.makeText(
+//                applicationContext,
+//                "Something",
+//                Toast.LENGTH_LONG
+//            ).show()
         }
     }
 
@@ -124,7 +150,7 @@ class MainActivity : AppCompatActivity()  {
     private suspend fun syncToServer() {
         var text = "Got server response"
         try {
-            val dishesList = dishViewModel.getAllDishes() ?: listOf()
+            val dishesList = dishViewModel.getAllDishes()
             println(dishesList)
             val gson = Gson()
             val dishes = gson.toJson(dishesList)

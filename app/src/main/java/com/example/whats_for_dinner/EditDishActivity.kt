@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.Intent.EXTRA_INDEX
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.properties.Delegates
 
 
 class EditDishActivity : AppCompatActivity() {
@@ -98,7 +100,7 @@ class EditDishActivity : AppCompatActivity() {
             } else {
                 val dishName = editDishNameView.text.toString()
                 val dishType = spinner.selectedItem.toString()
-                val dishDataArray = arrayOf(dishName, dishType)
+                val dishDataArray = arrayOf(editedDishId.toString(), dishName, dishType)
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
@@ -149,7 +151,7 @@ class EditDishActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_REPLY = "Add_new_dish_reply"
+        const val EXTRA_REPLY = "Edit_new_dish_reply"
     }
 
     private fun hideKeyboard() {

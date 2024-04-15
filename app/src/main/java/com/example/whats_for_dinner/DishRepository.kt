@@ -54,6 +54,30 @@ class DishRepository(private val dishDao: DishDao) {
         dishDao.updateDish(id, dish.name, dish.type, dish.serverId, dish.timestamp)
     }
 
+    suspend fun updateWithMask(id: Int, dish: Dish, mask: MutableMap<String, Boolean>) {
+        val dishList = dishDao.getDishByLocalId(id)
+        if (dishList.isEmpty()) return
+        val existingDish = dishList[0]
+
+        if ("timestamp" !in mask) {
+            dish.timestamp = java.time.Instant.now().toEpochMilli()
+            mask["timestamp"] = true
+        }
+
+        mask.forEach { (field, update) ->
+            when(field) {
+                "id" -> Unit
+                "serverId" -> existingDish.serverId = if (update) dish.serverId else existingDish.serverId
+                "name" -> existingDish.name = if (update) dish.name else existingDish.name
+                "type" -> existingDish.type = if (update) dish.type else existingDish.type
+                "timestamp" -> existingDish.timestamp = if (update) dish.timestamp else existingDish.timestamp
+                "note" -> existingDish.note = if (update) dish.note else existingDish.note
+            }
+        }
+
+        dishDao.updateDish(existingDish.id, existingDish.name, existingDish.type, existingDish.serverId, existingDish.timestamp)
+    }
+
     suspend fun deleteAll() {
         dishDao.deleteAll()
     }

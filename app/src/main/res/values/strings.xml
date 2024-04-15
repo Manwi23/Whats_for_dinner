@@ -13,6 +13,7 @@
     <string name="hint_dish_type">Dish type</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Not saved</string>
+    <string name="changes_saved">Changes saved</string>
     <string name="dish_name">Dish name</string>
     <string name="dish_type">Dish type</string>
     <string name="rand_dish">Rand dish</string>
@@ -20,7 +21,6 @@
     <string name="choose_type_of_dish">Type</string>
     <string name="yet_to_be_determined">Press dice symbol for a random dish</string>
     <string name="get_back">get back</string>
-    <string name="clicked">clicked!</string>
     <string name="delete_item">Delete item</string>
     <string name="edit_item">Edit item</string>
     <string name="add_type">Add new type</string>

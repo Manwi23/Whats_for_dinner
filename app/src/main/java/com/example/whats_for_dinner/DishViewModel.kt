@@ -64,8 +64,12 @@ class DishViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllDishes()
     }
 
-    suspend fun insertOrUpdate(id: Int, dish: Dish) = viewModelScope.launch(Dispatchers.IO) {
+    fun insertOrUpdate(id: Int, dish: Dish) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertOrUpdate(id, dish)
+    }
+
+    fun updateWithMask(id:Int, dish: Dish, mask: MutableMap<String, Boolean>) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateWithMask(id, dish, mask)
     }
 
 }

@@ -9,16 +9,29 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "dish_list")
 class Dish(
     @ColumnInfo(name = "name")
-    val name: String,
+    var name: String,
     @ColumnInfo(name = "type")
-    val type: String,
+    var type: String,
     @ColumnInfo(name = "server_id")
-    val serverId: Int = -1,
+    var serverId: Int = -1,
     @ColumnInfo(name = "timestamp")
-    val timestamp: Long = -1,
+    var timestamp: Long = -1,
     @ColumnInfo(name = "note")
-    val note: String = "",
+    var note: String = "",
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0;
+
+    companion object {
+        fun fieldDict(): MutableMap<String, Boolean> {
+            return mutableMapOf(
+                "id" to false,
+                "name" to false,
+                "type" to false,
+                "serverId" to false,
+                "timestamp" to false,
+                "note" to false
+            )
+        }
+    }
 }
