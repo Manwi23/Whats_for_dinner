@@ -8,4 +8,5 @@
     <color name="buttonLabel">#FFFFFF</color>
     <color name="ic_launcher_background">#DCD65F</color>
     <color name="dish_background">@android:color/holo_orange_light</color>
+    <color name="button_background">#E1CCFF</color>
 </resources>
