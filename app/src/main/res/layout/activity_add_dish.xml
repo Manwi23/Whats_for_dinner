@@ -77,20 +77,6 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/min_height"
-        android:fontFamily="sans-serif-light"
-        android:hint="@string/note"
-        android:inputType="textMultiLine"
-        android:layout_margin="@dimen/big_padding"
-        android:textSize="18sp"
-        android:autofillHints=""
-        android:scrollbars="vertical"
-        />
-
     <LinearLayout
         android:id="@+id/add_new_type_layout"
         android:layout_width="match_parent"
@@ -143,6 +129,21 @@
 
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/note"
+        android:inputType="textMultiLine"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp"
+        android:autofillHints=""
+        android:scrollbars="vertical"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
