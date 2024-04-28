@@ -42,11 +42,11 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
 
         val dish = dishes[position]
         val tempDeleted = dish.timestamp == (-1).toLong()
-        val builder = StringBuilder()
-        builder.append(dish.name)
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(dish.name)
             .append(", ")
             .append(dish.type)
-        holder.dishItemView.text = builder.toString()
+        holder.dishItemView.text = stringBuilder.toString()
         if (tempDeleted) {
             holder.dishItemView.paintFlags =
                 holder.dishItemView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
