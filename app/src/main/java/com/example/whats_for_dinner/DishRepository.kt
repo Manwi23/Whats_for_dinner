@@ -1,5 +1,6 @@
 package com.example.whats_for_dinner
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
@@ -51,7 +52,7 @@ class DishRepository(private val dishDao: DishDao) {
             dishDao.insert(dish)
             return
         }
-        dishDao.updateDish(id, dish.name, dish.type, dish.serverId, dish.timestamp)
+        dishDao.updateDish(id, dish.name, dish.type, dish.serverId, dish.timestamp, dish.note)
     }
 
     suspend fun updateWithMask(id: Int, dish: Dish, mask: MutableMap<String, Boolean>) {
@@ -75,7 +76,7 @@ class DishRepository(private val dishDao: DishDao) {
             }
         }
 
-        dishDao.updateDish(existingDish.id, existingDish.name, existingDish.type, existingDish.serverId, existingDish.timestamp)
+        dishDao.updateDish(existingDish.id, existingDish.name, existingDish.type, existingDish.serverId, existingDish.timestamp, existingDish.note)
     }
 
     suspend fun deleteAll() {

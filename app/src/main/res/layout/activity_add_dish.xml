@@ -39,7 +39,7 @@
                 android:minHeight="@dimen/min_height"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/choose_type_of_dish"
+                android:text="@string/type"
                 android:textSize="18sp"
                 android:gravity="center"
                 app:layout_constraintStart_toStartOf="parent"

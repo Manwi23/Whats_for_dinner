@@ -34,4 +34,8 @@ class Dish(
             )
         }
     }
+
+    fun prettyPrint(): String {
+        return "$id, $type, $note"
+    }
 }

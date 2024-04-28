@@ -88,6 +88,19 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
 
             true
         }
+
+
+        holder.storedView.setOnClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            val dishView = inflater.inflate(R.layout.view_dish, null)
+            dishView.findViewById<TextView>(R.id.dish_name_view).text = dish.name
+            dishView.findViewById<TextView>(R.id.dish_type_view).text = dish.type
+            dishView.findViewById<TextView>(R.id.dish_note_view).text = dish.note
+            builder.setView(dishView)
+                .setPositiveButton("Done") { _, _ ->}
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
     }
 
 

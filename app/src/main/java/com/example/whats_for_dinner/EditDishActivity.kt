@@ -104,6 +104,7 @@ class EditDishActivity : BaseActivity() {
                 val dishName = editDishNameView.text.toString()
                 val dishType = spinner.selectedItem.toString()
                 val dishNote = noteView.text.toString()
+                Log.e("note", dishNote)
                 val dishDataArray = arrayOf(editedDishId.toString(), dishName, dishType, dishNote)
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
@@ -173,7 +174,7 @@ class EditDishActivity : BaseActivity() {
     private fun setupUI(view: View) {
         // Set up touch listener for non-text box views to hide keyboard.
         if (view !is EditText) {
-            view.setOnTouchListener { v, _ ->
+            view.setOnTouchListener { _, _ ->
                 hideKeyboard()
                 false
             }

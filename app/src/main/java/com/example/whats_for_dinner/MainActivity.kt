@@ -116,7 +116,7 @@ class MainActivity : BaseActivity() {
                     mask["note"] = true
 
                     val dish = Dish(dishDataArray[1], dishDataArray[2], -1, java.time.Instant.now().toEpochMilli(), dishDataArray[3])
-                    Log.d("EDIT", dish.toString())
+                    Log.d("EDIT", dish.prettyPrint())
                     dishViewModel.updateWithMask(parseInt(dishDataArray[0]), dish, mask)
 
                     Toast.makeText(

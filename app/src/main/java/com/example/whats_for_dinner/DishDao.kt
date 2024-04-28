@@ -42,6 +42,6 @@ interface DishDao {
     @Query("UPDATE dish_list SET server_id = :serverId WHERE id = :id")
     suspend fun updateServerId(serverId: Int, id: Int)
 
-    @Query("UPDATE dish_list SET name = :name, type = :type, server_id = :serverId, timestamp = :timestamp WHERE id = :id")
-    suspend fun updateDish(id: Int, name: String, type: String, serverId: Int, timestamp: Long)
+    @Query("UPDATE dish_list SET name = :name, type = :type, server_id = :serverId, timestamp = :timestamp, note = :note WHERE id = :id")
+    suspend fun updateDish(id: Int, name: String, type: String, serverId: Int, timestamp: Long, note: String)
 }

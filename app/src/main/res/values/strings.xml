@@ -18,7 +18,8 @@
     <string name="dish_type">Dish type</string>
     <string name="rand_dish">Rand dish</string>
     <string name="not_implemented">Not implemented</string>
-    <string name="choose_type_of_dish">Type</string>
+    <string name="type">Type</string>
+    <string name="types">Type(s)</string>
     <string name="yet_to_be_determined">Press dice symbol for a random dish</string>
     <string name="get_back">get back</string>
     <string name="delete_item">Delete item</string>
@@ -32,4 +33,5 @@
     <string name="action_sync">Sync data</string>
     <string name="action_override">Override with server data</string>
     <string name="note">Note</string>
+    <string name="dish_name_view">Name</string>
 </resources>
