@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 class AddDishActivity : AppCompatActivity() {
 
     private lateinit var editDishNameView: EditText
+    private lateinit var noteView: EditText
     private val scope = MainScope()
     private lateinit var dishViewModel: DishViewModel
     private var plusClicked = false
@@ -39,6 +40,7 @@ class AddDishActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_dish)
         setupUI(findViewById(R.id.add_dish_main_layout))
         editDishNameView = findViewById(R.id.edit_dish_name)
+        noteView = findViewById(R.id.note)
         dishViewModel = ViewModelProvider(this)[DishViewModel::class.java]
         plusClicked = false
         addNewTypeView = findViewById(R.id.new_type_name)
@@ -82,7 +84,8 @@ class AddDishActivity : AppCompatActivity() {
             } else {
                 val dishName = editDishNameView.text.toString()
                 val dishType = spinner.selectedItem.toString()
-                val dishDataArray = arrayOf(dishName, dishType)
+                val dishNote = noteView.text.toString()
+                val dishDataArray = arrayOf(dishName, dishType, dishNote)
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()

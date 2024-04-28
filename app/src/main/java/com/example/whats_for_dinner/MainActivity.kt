@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity()  {
         if (requestCode == newDishActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val dishDataArray = data.getStringArrayExtra(AddDishActivity.EXTRA_REPLY)
-                val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1], -1, java.time.Instant.now().toEpochMilli()) }
+                val dish = dishDataArray?.get(0)?.let { Dish(it, dishDataArray[1], -1, java.time.Instant.now().toEpochMilli(), dishDataArray[2]) }
                 if (dish != null) {
                     dishViewModel.insert(dish)
 
@@ -111,8 +111,9 @@ class MainActivity : AppCompatActivity()  {
                     mask["name"] = true
                     mask["type"] = true
                     mask["timestamp"] = true
+                    mask["note"] = true
 
-                    val dish = Dish(dishDataArray[1], dishDataArray[2], -1, java.time.Instant.now().toEpochMilli())
+                    val dish = Dish(dishDataArray[1], dishDataArray[2], -1, java.time.Instant.now().toEpochMilli(), dishDataArray[3])
                     Log.d("EDIT", dish.toString())
                     dishViewModel.updateWithMask(parseInt(dishDataArray[0]), dish, mask)
 

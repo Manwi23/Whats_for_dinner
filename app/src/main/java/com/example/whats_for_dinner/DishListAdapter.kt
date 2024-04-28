@@ -1,5 +1,6 @@
 package com.example.whats_for_dinner
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Paint
 import android.util.Log
@@ -8,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
@@ -38,12 +41,13 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
     override fun onBindViewHolder(holder: DishViewHolder, position: Int) {
 
         val dish = dishes[position]
+        val tempDeleted = dish.timestamp == (-1).toLong()
         val builder = StringBuilder()
         builder.append(dish.name)
             .append(", ")
             .append(dish.type)
         holder.dishItemView.text = builder.toString()
-        if (dish.timestamp == (-1).toLong()) {
+        if (tempDeleted) {
             holder.dishItemView.paintFlags =
                 holder.dishItemView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         } else {
@@ -54,9 +58,19 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
             val popupMenu = PopupMenu(context, holder.storedView)
             popupMenu.setOnMenuItemClickListener{
                 if (it.itemId == R.id.action_delete) {
-                    GlobalScope.launch{
-                        dishViewModel.markToDelete(dish.id)
-                    }
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                    builder
+                        .setTitle("Delete dish?")
+                        .setMessage("This action cannot be reversed.")
+                        .setPositiveButton("Yes, continue") { _, _ ->
+                            GlobalScope.launch{
+                                dishViewModel.markToDelete(dish.id)
+                            }
+                        }
+                        .setNegativeButton("Cancel") { _, _ -> }
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
+
                 }
                 if (it.itemId == R.id.action_edit) {
                     GlobalScope.launch {
@@ -66,6 +80,10 @@ class DishListAdapter (private var context: Context, private var dishViewModel: 
                 true
             }
             popupMenu.inflate(R.menu.dish_menu)
+            if (tempDeleted) {
+                popupMenu.menu.findItem(R.id.action_edit).setEnabled(false)
+                popupMenu.menu.findItem(R.id.action_delete).setEnabled(false)
+            }
             popupMenu.show()
 
             true

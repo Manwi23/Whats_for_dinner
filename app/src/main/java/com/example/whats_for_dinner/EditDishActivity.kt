@@ -24,6 +24,7 @@ import kotlin.properties.Delegates
 class EditDishActivity : AppCompatActivity() {
 
     private lateinit var editDishNameView: EditText
+    private lateinit var noteView: EditText
     private val scope = MainScope()
     private lateinit var dishViewModel: DishViewModel
     private var plusClicked = false
@@ -47,6 +48,7 @@ class EditDishActivity : AppCompatActivity() {
         setupUI(findViewById(R.id.add_dish_main_layout))
 
         editDishNameView = findViewById(R.id.edit_dish_name)
+        noteView = findViewById(R.id.note)
         dishViewModel = ViewModelProvider(this)[DishViewModel::class.java]
         plusClicked = false
         addNewTypeView = findViewById(R.id.new_type_name)
@@ -78,11 +80,12 @@ class EditDishActivity : AppCompatActivity() {
 
             editDishNameView.setText(editedDish.name)
             spinner.setSelection(types.indexOf(editedDish.type))
+            noteView.setText(editedDish.note)
 
             adapter.notifyDataSetChanged()
         }
 
-        val button = findViewById<Button>(R.id.button_save)
+        val button = findViewById<FloatingActionButton>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
             if (TextUtils.isEmpty(editDishNameView.text)) {
@@ -100,7 +103,8 @@ class EditDishActivity : AppCompatActivity() {
             } else {
                 val dishName = editDishNameView.text.toString()
                 val dishType = spinner.selectedItem.toString()
-                val dishDataArray = arrayOf(editedDishId.toString(), dishName, dishType)
+                val dishNote = noteView.text.toString()
+                val dishDataArray = arrayOf(editedDishId.toString(), dishName, dishType, dishNote)
                 replyIntent.putExtra(EXTRA_REPLY, dishDataArray)
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
