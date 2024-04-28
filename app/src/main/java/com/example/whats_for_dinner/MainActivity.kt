@@ -174,7 +174,7 @@ class MainActivity : BaseActivity() {
                 if (dish.timestamp == (-1).toLong()) {
                     dishViewModel.deleteById(dish.id)
                 } else {
-                    dishViewModel.insertOrUpdate(dish.id, Dish(dish.name, dish.type, dish.serverId, dish.timestamp))
+                    dishViewModel.insertOrUpdate(dish.id, Dish(dish.name, dish.type, dish.serverId, dish.timestamp, dish.note))
                 }
             }
         } catch (e: java.lang.Exception) {
