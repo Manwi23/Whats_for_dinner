@@ -4,21 +4,18 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
-class RandomDishChooseActivity : AppCompatActivity() {
+class RandomDishActivity : BaseActivity() {
 
     private lateinit var dishViewModel: DishViewModel
     private lateinit var textView: TextView
@@ -32,12 +29,13 @@ class RandomDishChooseActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     public override fun onCreate(savedInstanceState: Bundle?) {
+        super.setReverse(true)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_random_dish_choose)
+        setContentView(R.layout.activity_random_dish)
 
         textView = findViewById(R.id.textView)
 
-        dishViewModel = ViewModelProvider(this).get(DishViewModel::class.java)
+        dishViewModel = ViewModelProvider(this)[DishViewModel::class.java]
         val types = listOf("All")
 
         val spinner: Spinner = findViewById(R.id.spinner)
@@ -67,7 +65,7 @@ class RandomDishChooseActivity : AppCompatActivity() {
             if (type == "All") {
                 scope.launch {
                     val dishes = dishViewModel.getAllDishes()
-                    Log.i("Tag 1", dishes.toString())
+                    Log.i("Random", dishes.toString())
                     if (!dishes.isNullOrEmpty()) {
                         val randomDish = dishes.shuffled().take(1)[0]
                         val builder = StringBuilder()
@@ -82,7 +80,7 @@ class RandomDishChooseActivity : AppCompatActivity() {
             } else {
                 scope.launch {
                     val dishes = dishViewModel.dishesOfAType(type)
-                    Log.i("Tag 1", dishes.toString())
+                    Log.i("Random", dishes.toString())
                     if (dishes.isNotEmpty()) {
                         val randomDish = dishes.shuffled().take(1)[0]
                         val builder = StringBuilder()

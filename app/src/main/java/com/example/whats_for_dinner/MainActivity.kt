@@ -33,7 +33,7 @@ import java.lang.Integer.parseInt
 
 //import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class MainActivity : AppCompatActivity()  {
+class MainActivity : BaseActivity() {
 
     private val newDishActivityRequestCode = 1
     private val randomDishActivityRequestCode = 2
@@ -71,7 +71,8 @@ class MainActivity : AppCompatActivity()  {
 
         val random = findViewById<FloatingActionButton>(R.id.rand)
         random.setOnClickListener {
-            val intent = Intent(this@MainActivity, RandomDishChooseActivity::class.java)
+            val intent = Intent(this@MainActivity, RandomDishActivity::class.java)
+            super.setReverse(true)
             startActivityForResult(intent, randomDishActivityRequestCode)
         }
 
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity()  {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
+        super.setReverse(false)
 
         if (requestCode == newDishActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->

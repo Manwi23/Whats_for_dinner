@@ -5,9 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.transition.Explode
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class AddDishActivity : AppCompatActivity() {
+class AddDishActivity : BaseActivity() {
 
     private lateinit var editDishNameView: EditText
     private lateinit var noteView: EditText
@@ -126,7 +128,7 @@ class AddDishActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        val buttonBack = findViewById<FloatingActionButton>(R.id.back_add_page)
+        val buttonBack = findViewById<FloatingActionButton>(R.id.back_button)
         buttonBack.setOnClickListener {
             hideKeyboard()
             val replyIntent = Intent()

@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
 
-class EditDishActivity : AppCompatActivity() {
+class EditDishActivity : BaseActivity() {
 
     private lateinit var editDishNameView: EditText
     private lateinit var noteView: EditText
@@ -145,7 +145,7 @@ class EditDishActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        val buttonBack = findViewById<FloatingActionButton>(R.id.back_add_page)
+        val buttonBack = findViewById<FloatingActionButton>(R.id.back_button)
         buttonBack.setOnClickListener {
             hideKeyboard()
             val replyIntent = Intent()
