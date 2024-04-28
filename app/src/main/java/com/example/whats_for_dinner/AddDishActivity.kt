@@ -5,11 +5,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -44,10 +46,12 @@ class AddDishActivity : AppCompatActivity() {
 
         val arrayList = ArrayList<String>()
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList)
+//        val adapter = ArrayAdapter(this, R.layout.item_type, R.id.item_type_text, arrayList)
 
         var currentTypes = ArrayList<String>()
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        adapter.setDropDownViewResource(R.layout.item_type)
         spinner.adapter = adapter
 
         scope.launch {
@@ -57,7 +61,10 @@ class AddDishActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        val button = findViewById<Button>(R.id.button_save)
+//        spinner.setSelection(0)
+//        Log.e("aaa", spinner.adapter.getDropDownView(0, null, null).toString())
+
+        val button = findViewById<FloatingActionButton>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
             if (TextUtils.isEmpty(editDishNameView.text)) {
@@ -144,13 +151,13 @@ class AddDishActivity : AppCompatActivity() {
     private fun setupUI(view: View) {
         // Set up touch listener for non-text box views to hide keyboard.
         if (view !is EditText) {
-            view.setOnTouchListener { v, _ ->
+            view.setOnTouchListener { _, _ ->
                 hideKeyboard()
                 false
             }
         }
 
-        //If a layout container, iterate over children and seed recursion.
+        // If a layout container, iterate over children and seed recursion.
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)

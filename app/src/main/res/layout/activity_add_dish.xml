@@ -52,18 +52,16 @@
                 android:layout_margin="16dp"
                 android:minHeight="@dimen/min_height"
                 android:layout_weight="1"
-                android:textSize="18sp"
-                android:textAlignment="textEnd"
                 android:gravity="end"
-                tools:ignore="NestedWeights" />
+                tools:ignore="NestedWeights"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:orientation="vertical"
+            android:gravity="center">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/add_type"
@@ -77,6 +75,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/add_new_type_layout"
         android:layout_width="match_parent"
@@ -86,81 +85,87 @@
         android:visibility="gone"
         android:baselineAligned="false">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/new_type_name"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-                <EditText
-                    android:id="@+id/new_type_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:autofillHints=""
-                    android:fontFamily="sans-serif-light"
-                    android:hint="@string/new_type_name"
-                    android:inputType="textAutoComplete"
-                    android:minHeight="@dimen/min_height"
-                    android:textSize="18sp"
-                    android:layout_weight="1"
-                    tools:ignore="NestedWeights" />
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:autofillHints=""
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/new_type_name"
+                android:inputType="textAutoComplete"
+                android:minHeight="@dimen/min_height"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights" />
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_type_save"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|end"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/add_type"
+                android:src="@drawable/baseline_save_24"
+                app:fabSize="mini" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_type_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/add_type"
-                    android:src="@drawable/baseline_save_24"
-                    app:fabSize="mini" />
-
-            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/button_save"
-        android:layout_margin="@dimen/big_padding"
-        android:textColor="@color/buttonLabel" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:gravity="bottom"
-            android:background="@color/button_background">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="bottom"
+                android:background="@color/button_background">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/back_add_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/get_back"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            />
-        </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/back_add_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/get_back"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/button_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/add_type"
+                    android:src="@drawable/baseline_save_24"
+                    />
+
+            </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>
